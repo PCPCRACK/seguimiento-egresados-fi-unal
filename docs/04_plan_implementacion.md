@@ -1,6 +1,6 @@
 # Plan de implementación
 
-> **Estado:** borrador para revisión. Desarrolla la sección 7 de [`01_metodologia.md`](01_metodologia.md): actividades, recursos, responsables y mecanismos de actualización periódica, como pide el enunciado (punto 3.1).
+> **Estado:** versión de entrega (noviembre de 2026). Desarrolla la sección 7 de [`01_metodologia.md`](01_metodologia.md): actividades, recursos, responsables y mecanismos de actualización periódica, como pide el enunciado (punto 3.1).
 > Los plazos van en meses relativos al inicio del proyecto (mes 1, mes 2…), y la sección 1.3 muestra un ejemplo con inicio en febrero de 2027. "Mes" se escribe completo para no confundirlo con los momentos de seguimiento (M1, M3, M5…).
 
 ## Resumen

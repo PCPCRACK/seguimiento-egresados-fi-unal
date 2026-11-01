@@ -1,6 +1,6 @@
 # Modelo de datos
 
-> **Estado:** borrador en discusión. El modelo se define en orden, y cada paso se cierra antes de pasar al siguiente:
+> **Estado:** versión de entrega (noviembre de 2026). El modelo se define en orden, y cada paso se cierra antes de pasar al siguiente:
 > 0. Configuración del entorno
 > 1. Modelo conceptual: entidades y relaciones, sin tipos
 > 2. Modelo lógico: atributos, llaves y normalización

@@ -1,6 +1,6 @@
 # Diccionario de datos
 
-> **Estado:** completo, para revisión. Atributos y reglas del modelo lógico (paso 2) y tipos de MariaDB del modelo físico (paso 3).
+> **Estado:** versión de entrega (noviembre de 2026). Atributos y reglas del modelo lógico (paso 2) y tipos de MariaDB del modelo físico (paso 3).
 > Las decisiones que rigen este diccionario están en [`02_modelo_datos.md`](02_modelo_datos.md), pasos 2 y 3. La implementación está en [`sql/03_tablas.sql`](../sql/03_tablas.sql), y cada restricción lleva el nombre de su tabla y su regla.
 
 **Cómo leer las tablas**

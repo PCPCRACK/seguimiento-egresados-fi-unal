@@ -1,6 +1,6 @@
 # Metodología para la consolidación de información de egresados a partir de LinkedIn
 
-> **Estado:** borrador en discusión. Lo que falta está al final, en "Pendientes".
+> **Estado:** versión de entrega (noviembre de 2026). Lo pendiente está al final, en "Pendientes".
 > Facultad de Ingeniería – Universidad Nacional de Colombia, sede Bogotá.
 
 ## 0. Principios de diseño
@@ -303,7 +303,7 @@ Cada decisión con la alternativa que se descartó y el motivo.
 | 19 | MariaDB | SQLite, PostgreSQL o Excel | Es el motor que usa la dependencia. Frente a SQLite, es multiusuario y tiene roles y permisos. Frente a Excel, garantiza integridad con llaves y restricciones |
 | 20 | MariaDB 12.3 LTS | MariaDB 13.0 (la más nueva) | La 13.0 es de ciclo corto y pierde soporte a finales de 2026. La 12.3 tiene soporte hasta 2029 |
 | 21 | Configuración de MariaDB: InnoDB, `utf8mb4`, intercalación en español, modo estricto, roles por función | Otros motores, juegos de caracteres e intercalaciones; permisos por usuario | Detalle y pruebas en `02_modelo_datos.md`, paso 0 |
-| 22 | Documentación en Markdown en el repositorio | Word o PDF desde el inicio | Markdown se versiona con Git, se ve directo en GitHub y permite revisar los cambios línea por línea. El PDF se genera al final para el correo |
+| 22 | Documentación en Markdown en el repositorio | Word o PDF | Markdown se versiona con Git, se ve directo en GitHub y permite revisar los cambios línea por línea. El enunciado pide publicar la propuesta en GitHub (punto 3.3), así que el repositorio es el documento y no hace falta una copia en otro formato |
 | 23 | Identificar una vez y capturar muchas veces | Repetir el cruce en cada captura | La identidad no cambia; repetir el cruce en cada PDF solo agrega trabajo de revisión. En las capturas siguientes basta comprobar la URL |
 | 24 | Cada decisión sobre una coincidencia como registro aparte | Un campo de decisión que se sobrescribe | Para calibrar los umbrales hay que comparar la decisión del bot con la de la revisión humana en el mismo caso |
 | 25 | Diccionario de equivalencias antes que la IA | Clasificar todo con IA cada vez | El mismo texto recibe siempre el mismo código, la clasificación es explicable y la carga de IA y de revisión baja con el tiempo |

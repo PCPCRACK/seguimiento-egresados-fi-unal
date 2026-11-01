@@ -9,7 +9,5 @@ desktop.ini
 *.tmp
 *.log
 
-# PDF: nunca se sube un perfil real. Solo se permite el documento de
-# entrega, en la carpeta entrega/.
+# PDF: nunca se sube un perfil real.
 *.pdf
-!entrega/*.pdf
