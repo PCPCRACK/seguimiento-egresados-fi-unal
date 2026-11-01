@@ -1,0 +1,15 @@
+# Sistema operativo y editores
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# Temporales
+*.tmp
+*.log
+
+# PDF: nunca se sube un perfil real. Solo se permite el documento de
+# entrega, en la carpeta entrega/.
+*.pdf
+!entrega/*.pdf
