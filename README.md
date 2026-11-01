@@ -22,6 +22,7 @@ Propuesta de **metodología**, **modelo de datos en MariaDB** y **datos de prueb
   - conservación limitada: el PDF y los datos observados se borran al cerrar cada caso;
   - la supresión completa se hace en una sola transacción, y queda una lista de no contactar con huellas HMAC;
   - ningún indicador se publica sobre grupos de menos de 5 personas.
+- **Implementación por fases,** con un piloto de un semestre en Ingeniería de Sistemas y Computación y sus posgrados. La muestra del canal C se dimensiona con las horas reales del auxiliar (12 por semana): el piloto cabe en un semestre, y para la Facultad completa el canal C rota tres programas por año mientras los canales A y B cubren a todos.
 
 ## Cómo está organizado
 
@@ -30,7 +31,7 @@ Propuesta de **metodología**, **modelo de datos en MariaDB** y **datos de prueb
 | [`docs/01_metodologia.md`](docs/01_metodologia.md) | Metodología: identificación, variables, recolección, calidad, protección de datos, análisis y **registro de decisiones** (cada elección con su alternativa descartada) |
 | [`docs/02_modelo_datos.md`](docs/02_modelo_datos.md) | Modelo de datos en cuatro pasos: configuración de MariaDB, modelo conceptual (39 entidades en 7 patrones, con diagramas), modelo lógico y modelo físico, con las pruebas hechas en el servidor |
 | [`docs/03_diccionario_datos.md`](docs/03_diccionario_datos.md) | Diccionario de datos: 28 dominios y las 39 tablas, columna por columna |
-| `docs/04_plan_implementacion.md` | Plan de implementación (en preparación) |
+| [`docs/04_plan_implementacion.md`](docs/04_plan_implementacion.md) | Plan de implementación: fases y cronograma, actividades con responsable, recursos, capacidad del auxiliar y tamaño de la muestra, calendario de actualización, indicadores del proceso y riesgos |
 | [`sql/`](sql) | Scripts de MariaDB: estructura, disparadores, bitácora, procedimientos, vistas, permisos, catálogos, datos de prueba y consultas |
 
 ## Correspondencia con el enunciado
@@ -38,6 +39,7 @@ Propuesta de **metodología**, **modelo de datos en MariaDB** y **datos de prueb
 | Punto | Dónde está |
 |---|---|
 | 3.1 Documento metodológico | `docs/01_metodologia.md`, secciones 1 a 7 |
+| 3.1 Implementación: actividades, recursos, responsables y actualización periódica | `docs/04_plan_implementacion.md` |
 | 3.2.1 Diccionario de datos | `docs/03_diccionario_datos.md` |
 | 3.2.2 Estructura de almacenamiento | `docs/02_modelo_datos.md` (pasos 0 y 3) y `sql/03_tablas.sql` |
 | 3.2.3 Identificación de registros | `docs/02_modelo_datos.md`, paso 1 (secciones 1.12 y 2.2) |
@@ -89,8 +91,7 @@ Diez egresados ficticios, y un undécimo que revoca su autorización. Cada caso 
 
 ## Pendientes
 
-- Plan de implementación: actividades, recursos, responsables y cronograma.
-- Para validar con la Facultad: la base legal del canal C (Oficina Jurídica), las ocupaciones afines a cada programa (comités de programa) y el umbral de celda mínima.
+Para validar con la Facultad: la base legal del canal C (Oficina Jurídica), las ocupaciones afines a cada programa (comités asesores) y el umbral de celda mínima. El plan de implementación los incluye como actividades (0.1, 0.3, 0.7 y 4.2).
 
 ## Herramientas
 

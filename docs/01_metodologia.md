@@ -19,7 +19,7 @@
 Egresados de los programas de pregrado y posgrado de la Facultad de Ingeniería, sede Bogotá, según el registro oficial de grados.
 
 - **El modelo de datos cubre los dos niveles desde el inicio.** Una persona puede tener varios grados, y el catálogo de programas incluye el nivel (pregrado, especialización, maestría, doctorado). Así no hay que rehacer tablas para ampliar el alcance, y se puede responder, por ejemplo, cuántos egresados de pregrado siguen un posgrado en la misma Facultad.
-- **La operación se hace por fases:** primero pregrado, que es el mayor volumen y donde más se usa LinkedIn; después posgrado, sin cambiar el modelo.
+- **Pregrado y posgrado también se operan juntos.** El piloto toma Ingeniería de Sistemas y Computación con su maestría y su doctorado, y la ampliación incorpora cada programa con sus posgrados (`04_plan_implementacion.md`). Así, quien tiene los dos grados recibe una sola invitación, y desde el inicio se prueba el paso de pregrado a posgrado.
 - **El catálogo incluye programas que ya no ofrecen admisión y nombres anteriores,** porque esos programas siguen teniendo egresados.
 - **Las reglas que dependen del programa** (por ejemplo, la duración mínima que sirve para descartar casos imposibles) se guardan en el catálogo de programas, no en el código.
 - **Quien se inscribe a grado entra al sistema antes de graduarse,** con su grado "en trámite". Es la lista de espera de los próximos egresados.
@@ -133,11 +133,14 @@ No es viable ni necesario consultar a mano a todos los egresados antiguos. Para 
 
 ```
 n0 = z² · p · (1 − p) / e²        (z = 1,96 al 95 %; p = 0,5; e = margen de error)
-n  = n0 / (1 + (n0 − 1) / N)      (corrección por población finita, N = egresados del estrato)
+n  = n0 / (1 + (n0 − 1) / N)      (corrección por población finita, N = población del estrato)
 ```
 
+- **La población de cada estrato (N) son quienes no respondieron a la invitación del canal B** (1.3). Quienes respondieron ya están medidos y pesan 1; la muestra representa al resto. Es el submuestreo de no respondientes de Hansen y Hurwitz (1946): una primera fase barata (el correo) y, para quienes no responden, una muestra con un método más costoso (la búsqueda manual).
+- **El número de búsquedas es n dividido por la tasa de encontrados esperada,** con un máximo de N. Si se buscaran solo n, los no encontrados dejarían un margen peor que el planeado. Cuando el estrato es tan pequeño que habría que buscar a todos, se hace censo.
+- El tamaño de cada muestra se ajusta a las horas del auxiliar con la regla de `04_plan_implementacion.md`, sección 5.
 - Se registra el diseño de cada muestra (margen, nivel de confianza y la semilla aleatoria con que se seleccionó). Con la semilla se obtiene otra vez la misma selección.
-- Se registran el estrato y el peso de cada egresado seleccionado. El peso (egresados del estrato ÷ seleccionados) es lo que convierte los resultados de la muestra en estimaciones de toda la cohorte.
+- Se registran el estrato y el peso de cada egresado seleccionado. El peso (población del estrato ÷ seleccionados) es lo que convierte los resultados de la muestra en estimaciones de toda la cohorte. Al calcular los indicadores se ajusta por los no encontrados del estrato.
 
 Cada indicador se publica junto con su cobertura, para dejar visible el sesgo (por ejemplo, que los recién egresados estén sobrerrepresentados).
 
@@ -264,7 +267,12 @@ Preguntas que la Facultad podría responder, por programa y cohorte:
 
 ## 7. Implementación
 
-Se desarrolla en `04_plan_implementacion.md`: actividades, responsables, recursos, cronograma y mecanismo de actualización (momentos de seguimiento, sección 1.5).
+Se desarrolla en `04_plan_implementacion.md`: actividades, responsables, recursos, cronograma y mecanismo de actualización periódica. En resumen:
+
+- **Seis fases:** acuerdos, construcción, piloto, evaluación, ampliación y operación periódica, con la operación completa desde el mes 19.
+- **Piloto de un semestre con Ingeniería de Sistemas y Computación y sus posgrados,** para calibrar el puntaje y medir los tiempos reales antes de ampliar.
+- **Capacidad:** con 12 horas semanales del auxiliar, el piloto cabe en un semestre. Para la Facultad completa, el canal C rota tres programas por año, y los canales A y B cubren a todos cada año.
+- **Actualización periódica:** envíos semanales del canal B en el aniversario del grado (momentos de seguimiento, sección 1.5), depuración mensual, calibración trimestral y una muestra anual del canal C, con indicadores que muestran si el proceso funciona.
 
 ---
 
@@ -289,7 +297,7 @@ Cada decisión con la alternativa que se descartó y el motivo.
 | 13 | Año obligatorio y mes opcional | Solo año, o fecha completa | Solo con el año, "tiempo hasta el primer empleo" pierde precisión. La fecha completa obligaría a inventar el día, que LinkedIn no muestra |
 | 14 | Historial por capturas | Vigencia por fila, o versionado automático de MariaDB | Cada PDF es una foto completa del perfil y la captura la guarda tal cual. La vigencia por fila exige comparar fila por fila qué cambió. El versionado de MariaDB registra cambios en la base, no la fuente del dato |
 | 15 | Dos bases de datos (identidad y análisis) | Una base con permisos por tabla | Los permisos se dan por base completa y el analista no puede ver la identidad ni por error. Con una sola base, un `GRANT` mal puesto expone todo |
-| 16 | Pregrado y posgrado en el modelo, con operación por fases | Solo pregrado | Ampliar después obligaría a rehacer tablas. Con los dos niveles se puede ver, por ejemplo, quién sigue un posgrado en la misma Facultad |
+| 16 | Pregrado y posgrado en el modelo y en la operación, desde el piloto | Solo pregrado, o el posgrado en una fase posterior | Ampliar después obligaría a rehacer tablas y a contactar dos veces a quien tiene los dos grados. Con los dos niveles juntos se puede ver, por ejemplo, quién sigue un posgrado en la misma Facultad |
 | 17 | Borrar todos los datos individuales al revocar | Borrar solo la identidad, o marcar como inactivo | Sin la identidad los datos quedan seudonimizados, no anónimos, y se puede reidentificar a la persona. Una marca conserva los datos y no es supresión |
 | 18 | HMAC-SHA256 con clave secreta en la lista de no contactar | SHA-256 simple, o guardar el documento | Los números de documento son predecibles: un hash simple se revierte probando todos. El documento en claro contradice la revocatoria |
 | 19 | MariaDB | SQLite, PostgreSQL o Excel | Es el motor que usa la dependencia. Frente a SQLite, es multiusuario y tiene roles y permisos. Frente a Excel, garantiza integridad con llaves y restricciones |
@@ -312,16 +320,17 @@ Cada decisión con la alternativa que se descartó y el motivo.
 | 36 | Ocupaciones con la CUOC (DANE, actualización 2025) | CIUO-08 A.C. | Es el referente oficial para las ocupaciones del mercado laboral colombiano (Decreto 654 de 2021). Se construye sobre la CIUO-08, así que conserva la comparación internacional en los niveles superiores, y agrega un quinto nivel que distingue mejor los cargos |
 | 37 | Decisiones del modelo lógico | Alternativas de modelado | Detalle en `02_modelo_datos.md`, paso 2, sección 2.9 |
 | 38 | Decisiones del modelo físico | Alternativas de tipos y mecanismos | Detalle, con las pruebas hechas en el servidor, en `02_modelo_datos.md`, paso 3 (secciones 3.1 y 3.11) |
+| 39 | Decisiones del plan de implementación | Alternativas de operación | Detalle en `04_plan_implementacion.md`, sección 10 |
 
 ## Pendientes
 
-1. Probar el lector del PDF con un perfil que tenga varios cargos en una misma empresa.
+1. Probar el lector del PDF con un perfil que tenga varios cargos en una misma empresa (actividad 1.5 del plan de implementación).
 
 **Para validar con la Facultad** (no bloquean el diseño):
 
-2. Base legal del canal C, con la Oficina Jurídica de la UNAL.
-3. Ocupaciones afines a cada programa, con cada comité de programa.
-4. Umbral de celda mínima para publicar.
+2. Base legal del canal C, con la Oficina Jurídica de la UNAL (actividad 0.3 del plan).
+3. Ocupaciones afines a cada programa, con cada comité asesor (actividades 0.7 y 4.2).
+4. Umbral de celda mínima para publicar (actividad 0.1).
 
 ## Fuentes verificadas
 
@@ -345,5 +354,6 @@ Cada decisión con la alternativa que se descartó y el motivo.
 | CUOC: adoptada por el Decreto 654 de 2021 y la Resolución 771 de 2021; actualización 2025 (Resolución 1241 de 2025); cinco niveles: 10 grandes grupos, 43 subgrupos principales, 136 subgrupos, 452 grupos primarios y 680 ocupaciones | Página de la CUOC en el sitio del DANE | Verificado. Confirmar los dígitos de cada nivel con el archivo de estructura al cargar el catálogo |
 | CIIU Rev. 4 A.C. (2022) es la versión vigente; 21 secciones identificadas con letras; la CIIU Rev. 5 está en adaptación | Documento oficial del DANE | Verificado. Confirmar los conteos con la estructura detallada al cargar el catálogo |
 | DIVIPOLA: departamento de 2 dígitos, municipio de 5 dígitos (departamento + 3) y centro poblado de 8 | Página de la DIVIPOLA en el sitio del DANE y fuentes secundarias | Verificado. Confirmar con el archivo del DANE al cargar el catálogo |
+| Submuestreo de no respondientes | Hansen, M. H. y Hurwitz, W. N. (1946). The problem of non-response in sample surveys. *Journal of the American Statistical Association*, 41(236), 517–529 | Verificado |
 | Comportamiento de MariaDB 12.3.3: llaves foráneas entre bases, `CHECK` sin fecha actual, `UNIQUE` sobre columnas calculadas, conversiones de tipos | Pruebas en el servidor, 29 de octubre de 2026 | Verificado (`02_modelo_datos.md`, paso 3.1) |
 | En un disparador, `CURRENT_USER()` devuelve la cuenta dueña; los borrados en cascada no activan disparadores; `REGEXP` distingue mayúsculas según la intercalación | Documentación de MariaDB | Verificado |
